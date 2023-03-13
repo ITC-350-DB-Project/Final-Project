@@ -1,0 +1,6 @@
+{
+    "host": "127.0.0.1",
+    "user": "root",
+    "password": "PROVIDE A PASSWORD HERE",
+    "database": "APT_DATABASE"
+}
