@@ -1,6 +1,1 @@
-function emptyOrRows(rows) {
-    if (!rows) {
-        return [];
-    }
-    return rows;
-}
+// ! This will contain any helper functions we may need to be shared between routes

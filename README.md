@@ -1,7 +1,7 @@
 # API
 
 ## Setup:
-copy and rename the settings.example file to .settings.json and set the values to connect to the database
+copy and rename the `settings.example` file to `.settings.json` and set the values to connect to the database
 
 then run 
 ```bash
@@ -18,3 +18,5 @@ node run start
 `/`: will list connection status
 
 `/apt`: lists all APTs from the database
+
+`/apt/{id}`: queries the DB for a specific APT based on APTID
