@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <style>
+            th {
+                text-align: left;
+                min-width: 150px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <table id="table">
+                <tr>
+                  <th>Name</th>
+                  <th>Nationality</th>
+                  <th>First Seen</th>
+                </tr>
+              </table> 
+        </div>
+
+    </body>
+    <script>
+        $(document).ready(function(){
+            $.get("http://localhost:3000/apt", function(data){
+                process(data);
+            });
+        });
+
+        function process(data){
+            //console.log(data);
+            for(i=0; i < data.length; i++){
+                console.log(data[i]);
+                var item = `
+                <tr>
+                  <td>${data[i].Name}</td>
+                  <td>${data[i].Nationality}</td>
+                  <td>${data[i]["First Seen"]}</td>
+                </tr>`
+
+                $("#table").append(item);
+            }
+        }
+    </script>
+</html>

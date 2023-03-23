@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const path = require('path');
 const aptRouter = require("./routes/apt")
 app.use(express.json());
 app.use(
@@ -9,8 +10,12 @@ app.use(
     })
 );
 // * Return data for the default response
+// app.get("/", (req, res) => {
+//     res.json({ message: "API status: Connected!" });
+// });
+
 app.get("/", (req, res) => {
-    res.json({ message: "API status: Connected!" });
+    res.sendFile(path.join(__dirname, '/html/index.html'));
 });
 
 // * Return data for the /apt subdomain

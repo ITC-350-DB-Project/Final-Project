@@ -2,7 +2,7 @@ const db = require('./db');
 // const helper = require('../helper')
 
 async function getAll() {
-    return await db.query(`SELECT * FROM APT`);
+    return await db.query(`SELECT * FROM view_aptlist`);
 }
 // * Queries the database for a singular item based on APTID
 async function getOne(id){
