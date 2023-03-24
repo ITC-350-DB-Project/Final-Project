@@ -38,7 +38,7 @@ app.post("/authenticate", async function (req, res) {
         rightCreds = await auth.AuthenticateUser(req.body.username, req.body.password);
         console.log("Creds found and match? " + rightCreds);
         if (rightCreds){
-            res.writeHead(301, { Location: "http://localhost:3000/" });
+            res.writeHead(301, { Location: "http://localhost:3000/admin" });
             res.end();
         } else {
             res.status(500).send("There is an error with your username or password!");
