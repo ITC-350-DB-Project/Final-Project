@@ -1,9 +1,10 @@
+const db = require('./db');
 var mysql = require('mysql2/promise');
 const crypto = require('crypto');
 const config = require('../../.settings.json');
 
 async function AuthenticateUser(username, password){
-    data = await query(`SELECT PasswordHash, Salt FROM Admin WHERE AdminUsername='${username}'`);
+    data = await db.query(`SELECT PasswordHash, Salt FROM Admin WHERE AdminUsername='${username}'`);
     console.log("data = " + data);
     if(data.length === 0){
         return false;
@@ -16,19 +17,6 @@ async function AuthenticateUser(username, password){
     } else {
         return false;
     }
-}
-
-async function query(sql, params) {
-    db = {
-        "host": config.host,
-        "user": config.user,
-        "password": config.password,
-        "database": config.database
-    }
-    const connection = await mysql.createConnection(db);
-    const [results,] = await connection.execute(sql, params);
-
-    return results;
 }
 
 module.exports = {
