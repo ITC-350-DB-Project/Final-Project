@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const path = require('path');
-const aptRouter = require("./routes/apt")
+const aptRouter = require("./routes/apt");
+const adminRouter = require("./routes/admin");
 const auth = require('./services/auth.js');
 app.use(express.json());
 app.use(
@@ -72,7 +73,8 @@ app.get("/css/style.css", (req, res) => {
 
 
 // * Return data for the /apt subdomain
-app.use("/apt", aptRouter);
+app.use("/api/apt", aptRouter);
+app.use("/api/admin", adminRouter);
 
 // * Error handling stuff
 app.use((err, req, res, next) => {
