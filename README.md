@@ -15,8 +15,10 @@ node run start
 ```
 
 ## Endpoints:
-`/`: will list connection status
+`/api/apt`: lists all APTs from the database
 
-`/apt`: lists all APTs from the database
+`/api/apt/{id}`: queries the DB for a specific APT based on APTID
 
-`/apt/{id}`: queries the DB for a specific APT based on APTID
+`/api/admin`: lists all Admins from the database
+
+`/api/admin/{username}`: lists information about a specific Admin based on AdminUsername
