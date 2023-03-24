@@ -12,9 +12,9 @@ app.use(
     })
 );
 // * Return data for the default response
-// app.get("/", (req, res) => {
-//     res.json({ message: "API status: Connected!" });
-// });
+app.get("/api/", (req, res) => {
+    res.json({ message: "API status: Connected!" });
+});
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
