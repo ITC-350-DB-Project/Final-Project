@@ -15,6 +15,13 @@ app.use(
 //     res.json({ message: "API status: Connected!" });
 // });
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve the Bootstrap CSS and JS files
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/html/index.html'));
 });
@@ -42,6 +49,27 @@ app.post("/authenticate", async function (req, res) {
         res.status(500).send(err);
     }
 });
+
+app.get("/navbar", (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/navbar.html'));
+});
+
+app.get("/database", (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/database.html'));
+});
+
+app.get("/admin", (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin.html'));
+});
+
+app.get("/background-image", (req, res) => {
+    res.sendFile(path.join(__dirname, '/img/background-image.jpg'));
+});
+
+app.get("/css/style.css", (req, res) => {
+    res.sendFile(path.join(__dirname, '/css/style.css'));
+});
+
 
 // * Return data for the /apt subdomain
 app.use("/apt", aptRouter);
