@@ -6,7 +6,7 @@ async function getAll() {
 }
 // * Queries the database for a singular item based on APTID
 async function getOne(username) {
-    data = await db.query(`SELECT * FROM Admin WHERE AdminUsername=\"${username}\"`);
+    data = await db.query(`SELECT * FROM Admin WHERE AdminUsername=\"${username}\"`); // ! This should probably not return the hashed passwords from the database, we don't want this to expose passwords
     // * If there was no data found in the database matching the provided ID then return an error message
     if (data.length == 0) {
         data = [{ "Response": "Not Found" }]
@@ -26,5 +26,7 @@ async function deleteAdmin(username) {
 
 module.exports = {
     getAll,
-    getOne
+    getOne,
+    updatePassword,
+    deleteAdmin
 }
