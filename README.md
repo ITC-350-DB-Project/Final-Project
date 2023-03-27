@@ -23,6 +23,8 @@ node run start
 
 `/api/admin/{username}`: lists information about a specific Admin based on AdminUsername
 
+# App Info
+
 ## Credentials:
 Password format: SHA256(password + salt)
 
