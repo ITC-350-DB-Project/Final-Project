@@ -5,12 +5,22 @@ const path = require('path');
 const aptRouter = require("./routes/apt");
 const adminRouter = require("./routes/admin");
 const auth = require('./services/auth.js');
+const sessions = require('express-session');
+
 app.use(express.json());
 app.use(
     express.urlencoded({
         extended: true,
     })
 );
+app.use(sessions({
+    secret: "somerandomsecrettousetogeneratethesessionstuffthatisneededforittowork",
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    resave: false
+}));
+
+
 // * Return data for the default response
 app.get("/api/", (req, res) => {
     res.json({ message: "API status: Connected!" });
@@ -29,7 +39,11 @@ app.get("/", (req, res) => {
 
 // Return Login page
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, '/html/login.html'));
+    if(req.session.user){
+        res.redirect('http://localhost:3000/admin');
+    } else {
+        res.sendFile(path.join(__dirname, '/html/login.html'));
+    }
 });
 
 // Endpoint that handles the admin login from /login
@@ -39,8 +53,12 @@ app.post("/authenticate", async function (req, res) {
         rightCreds = await auth.AuthenticateUser(req.body.username, req.body.password);
         console.log("Creds found and match? " + rightCreds);
         if (rightCreds){
-            res.writeHead(301, { Location: "http://localhost:3000/admin" });
-            res.end();
+            req.session.regenerate(function (err){
+                req.session.user = req.body.username;
+                req.session.save(function (err){
+                    res.redirect('http://localhost:3000/admin');
+                });
+            });
         } else {
             res.status(500).send("There is an error with your username or password!");
         }
@@ -51,6 +69,18 @@ app.post("/authenticate", async function (req, res) {
     }
 });
 
+app.get('/logout', function (req, res, next){
+    req.session.user = null;
+    req.session.save(function (err){
+        if (err){
+            next(err);
+        }
+        req.session.regenerate(function(err){
+            res.redirect('/');
+        })
+    });
+});
+
 app.get("/navbar", (req, res) => {
     res.sendFile(path.join(__dirname, '/html/navbar.html'));
 });
@@ -59,7 +89,7 @@ app.get("/database", (req, res) => {
     res.sendFile(path.join(__dirname, '/html/database.html'));
 });
 
-app.get("/admin", (req, res) => {
+app.get("/admin", isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '/html/admin.html'));
 });
 
@@ -88,3 +118,11 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`API enabled and listening at http://localhost:${port}`);
 });
+
+function isAuthenticated(req, res, next){
+    if (req.session.user) {
+        next();
+    } else {
+        next('route');
+    }
+}
