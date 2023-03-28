@@ -1,6 +1,10 @@
 const db = require('./db');
 // const helper = require('../helper')
 
+async function createAdmin(username, Fname, Lname, Password, Salt) {
+    return await db.query(`INSERT INTO Admin (AdminUsername, AdminFName, AdminLName, DateCreated, PasswordHash, Salt, AdminLastLogin) VALUES (${username}, ${Fname}, ${Lname}, ${Date.timeNow()}, ${password}, ${salt}, ${Date.timeNow()})`)
+}
+
 async function getAll() {
     return await db.query(`SELECT * FROM Admin`);
 }
@@ -19,12 +23,18 @@ async function updatePassword() {
 }
 
 async function deleteAdmin(username) {
-    await db.query(`DELETE FROM Admin WHERE AdminUsername=\"${username}\"`);
-    data = getOne(username);
+    data = await db.query(`DELETE FROM Admin WHERE AdminUsername=\"${username}\"`);
+    if (data.affectedRows != 0){
+        data = [{"Response": "Delete Successful"}]
+    }
+    else {
+        data = [{"Response": "Delete Failed"}]
+    }
     return data;
 }
 
 module.exports = {
+    createAdmin,
     getAll,
     getOne,
     updatePassword,
