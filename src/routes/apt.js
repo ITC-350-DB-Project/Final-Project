@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const apt = require('../services/apt');
 
+router.create('/', async function (req, res) {
+    try {
+        res.json(await apt.createOne());
+    } catch (err) {
+        console.error(`Error could not create APT:`, err.message);
+        res.status(500).send(err);
+    }
+});
+
 // * Returns all APTs when querying with no ID
 router.get('/', async function (req, res) {
     try {
@@ -12,12 +21,30 @@ router.get('/', async function (req, res) {
     }
 });
 // * Returns a specific APT when querying with an ID
-router.get('/:id', async function (req, res, next){
+router.get('/:id', async function (req, res){
     try {
-        res.json(await apt.getOne(req.params.id))
+        res.json(await apt.getOne(req.params.id));
     } catch (err) {
         console.error(`Error while fetching ID:${req.params.id} from DB`);
-        next(err);
+        res.status(500).send(err);
     }
 });
+
+router.update('/:id', async function (req, res) {
+    try {
+        res.json(await apt.updateOne(req.params.id));
+    } catch (err) {
+        console.error(`Error attempting to update APT ${req.id}`, err.message);
+        res.status(500).send(err);
+    }
+});
+
+router.delete('/:id', async function (req, res) {
+    try {
+        res.json(await apt.deleteOne(req.params.id));
+    } catch (err) {
+        console.error(`Error attempting to delete APT ${req.params.id}`, err.message);
+        res.status(500).send(err);
+    }
+})
 module.exports = router;
