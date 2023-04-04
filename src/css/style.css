@@ -1,9 +1,0 @@
-body {
-    background-image: url(background-image.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.form-control {
-    max-width: 200px;
-}

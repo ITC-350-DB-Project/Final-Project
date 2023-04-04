@@ -28,6 +28,7 @@
                   <th>Nationality</th>
                   <th>Type</th>
                   <th>First Seen</th>
+                  <th>DELETE</th>
                 </tr>
               </table> 
         </div>
@@ -51,13 +52,17 @@
                   <td>${data[i].Nationality}</td>
                   <td>${data[i].Types}</td>
                   <td>${data[i]["First Seen"]}</td>
+                  <td><button class="text-white btn btn-dark">DELETE</button>
                 </tr>`
 
                 $("#table").append(item);
             }
         }
         $(function(){
-            $("#navbar-placeholder").load("navbar");
+            console.log("Loading navbar...");
+            $("#navbar-placeholder").load("/navbar", function(){
+                console.log("Navbar loaded successfully!");
+            });
         });
         </script>
 </html>

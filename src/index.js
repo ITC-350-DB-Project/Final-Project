@@ -85,22 +85,33 @@ app.get("/navbar", (req, res) => {
     res.sendFile(path.join(__dirname, '/html/navbar.html'));
 });
 
-app.get("/database", (req, res) => {
-    res.sendFile(path.join(__dirname, '/html/database.html'));
+app.get("/admin", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/index.html'));
 });
 
-app.get("/admin", auth.isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, '/html/admin.html'));
+app.get("/admin/apt", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/apt.html'));
+});
+
+app.get("/admin/users", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/users.html'));
+});
+
+app.get("/admin/create_apt", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/create_apt.html'));
+});
+
+app.get("/admin/create_admin", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/create_admin.html'));
 });
 
 app.get("/background-image", (req, res) => {
     res.sendFile(path.join(__dirname, '/img/background-image.jpg'));
 });
 
-app.get("/css/style.css", (req, res) => {
-    res.sendFile(path.join(__dirname, '/css/style.css'));
+app.get("/login", (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/login.html'));
 });
-
 
 // * Return data for the /apt subdomain
 app.use("/api/apt", aptRouter);
