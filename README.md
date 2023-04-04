@@ -15,7 +15,7 @@ npm run start
 ```
 
 ## Endpoints:
-CREATE: `/api/apt`: creates a new APT with data provided
+CREATE: `/api/apt`: creates a new APT with data provided. Required fields: aptNation, aptDesc, aptFirstSeen, aptName
 
 CREATE: `/api/admin`: creates a new Admin with data provided
 
