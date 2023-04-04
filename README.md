@@ -15,9 +15,9 @@ npm run start
 ```
 
 ## Endpoints:
-CREATE: `/api/apt`: creates a new APT with data provided. Required fields: aptNation, aptDesc, aptFirstSeen, aptName
+CREATE (POST): `/api/apt`: creates a new APT with data provided. Required fields: aptNation, aptDesc, aptFirstSeen, aptName
 
-CREATE: `/api/admin`: creates a new Admin with data provided
+CREATE (POST): `/api/admin`: creates a new Admin with data provided. Required fields: username, fname, lname, password (In plaintext. It's hashed on the server)
 
 GET: `/api/apt`: lists all APTs from the database
 
@@ -27,9 +27,9 @@ GET: `/api/admin`: lists all Admins from the database
 
 GET: `/api/admin/{username}`: lists information about a specific Admin based on AdminUsername
 
-UPDATE: `/api/apt/{id}`: updates APT information with data provided
+UPDATE (PUT): `/api/apt/{id}`: updates APT information with data provided
 
-UPDATE: `/api/admin/{username}`: updates the password for the Admin
+UPDATE (PUT): `/api/admin/{username}`: updates the password for the Admin
 
 DELETE: `/api/apt/{id}`: deletes an APT matching the ID provided
 
