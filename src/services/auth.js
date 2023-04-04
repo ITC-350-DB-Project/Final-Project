@@ -19,6 +19,15 @@ async function AuthenticateUser(username, password){
     }
 }
 
+function isAuthenticated(req, res, next){
+    if (req.session.user) {
+        next();
+    } else {
+        next('route');
+    }
+}
+
 module.exports = {
-    AuthenticateUser
+    AuthenticateUser,
+    isAuthenticated
 }

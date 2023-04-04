@@ -89,7 +89,7 @@ app.get("/database", (req, res) => {
     res.sendFile(path.join(__dirname, '/html/database.html'));
 });
 
-app.get("/admin", isAuthenticated, (req, res) => {
+app.get("/admin", auth.isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '/html/admin.html'));
 });
 
@@ -118,11 +118,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`API enabled and listening at http://localhost:${port}`);
 });
-
-function isAuthenticated(req, res, next){
-    if (req.session.user) {
-        next();
-    } else {
-        next('route');
-    }
-}
