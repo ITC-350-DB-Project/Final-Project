@@ -15,13 +15,26 @@ node run start
 ```
 
 ## Endpoints:
-`/api/apt`: lists all APTs from the database
+CREATE: `/api/apt`: creates a new APT with data provided
 
-`/api/apt/{id}`: queries the DB for a specific APT based on APTID
+CREATE: `/api/admin`: creates a new Admin with data provided
 
-`/api/admin`: lists all Admins from the database
+GET: `/api/apt`: lists all APTs from the database
 
-`/api/admin/{username}`: lists information about a specific Admin based on AdminUsername
+GET: `/api/apt/{id}`: queries the DB for a specific APT based on APTID
+
+GET: `/api/admin`: lists all Admins from the database
+
+GET: `/api/admin/{username}`: lists information about a specific Admin based on AdminUsername
+
+UPDATE: `/api/apt/{id}`: updates APT information with data provided
+
+UPDATE: `/api/admin/{username}`: updates the password for the Admin
+
+DELETE: `/api/apt/{id}`: deletes an APT matching the ID provided
+
+DELETE: `/api/admin/{username}`: deletes an Admin matching the username provided
+
 
 # App Info
 
