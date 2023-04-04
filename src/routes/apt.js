@@ -2,9 +2,22 @@ const express = require('express');
 const router = express.Router();
 const apt = require('../services/apt');
 
-router.create('/', async function (req, res) {
+// was router.create
+// needs authentication
+router.post('/', async function (req, res) {
     try {
-        res.json(await apt.createOne());
+        //remove this once the authentication is in place because then the username will be always available
+        console.log(req.session.user);
+        if (typeof req.session.user === 'undefined'){
+            temp = "wiljon32";
+        }else {
+            temp = req.session.user;
+        }
+        console.log(temp);
+
+        res.json(await apt.createOne(req.body.aptNation, req.body.aptDesc, req.body.aptFirstSeen, req.body.aptName, temp));
+        // Use the following once auth is enforced
+        //res.json(await apt.createOne(req.body.aptNation, req.body.aptDesc, req.body.aptFirstSeen, req.body.aptName, req.session.user));
     } catch (err) {
         console.error(`Error could not create APT:`, err.message);
         res.status(500).send(err);
@@ -30,7 +43,8 @@ router.get('/:id', async function (req, res){
     }
 });
 
-router.update('/:id', async function (req, res) {
+// Was router.update
+router.put('/:id', async function (req, res) {
     try {
         res.json(await apt.updateOne(req.params.id));
     } catch (err) {

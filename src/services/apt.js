@@ -1,10 +1,11 @@
 const db = require('./db');
 // const helper = require('../helper')
 
-async function createOne(aptID, aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
+// Still needs authentication
+async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
     return await db.query(`INSERT INTO APT 
-    (APTID, APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) 
-    VALUES (${aptID}, ${aptNation}, ${aptDesc}, ${aptFirstSeen}, ${Date.now()}, ${aptName}, ${adminUsername}, ${adminUsername}})`);
+    (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) 
+    VALUES ('${aptNation}', '${aptDesc}', '${aptFirstSeen}', NOW(), '${aptName}', '${adminUsername}', '${adminUsername}')`);
 }
 
 async function getAll() {
@@ -34,8 +35,9 @@ async function updateOne(aptID, aptNation, aptDesc, aptName, adminUsername){
     return data
 }
 
+// Still needs authentication
 async function deleteOne(aptID){
-    data = await db.query(`DELETE FROM APT WHERE APTID=\"${aptID}`);
+    data = await db.query(`DELETE FROM APT WHERE APTID=${aptID}`);
     if (data.affectedRows != 0){
         data = [{"Response": "Delete Successful"}]
     }
