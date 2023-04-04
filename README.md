@@ -5,13 +5,13 @@ copy and rename the `settings.example` file to `.settings.json` and set the valu
 
 then run 
 ```bash
-node run dev
+npm run dev
 ```
 to enter developer mode. This will automatically reload the API every time that you save a file
 
 If you just want to start the API without devtools run
 ```bash
-node run start
+npm run start
 ```
 
 ## Endpoints:
