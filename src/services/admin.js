@@ -2,7 +2,7 @@ const db = require('./db');
 // const helper = require('../helper')
 
 async function createAdmin(username, Fname, Lname, Password, Salt) {
-    return await db.query(`INSERT INTO Admin (AdminUsername, AdminFName, AdminLName, DateCreated, PasswordHash, Salt, AdminLastLogin) VALUES ('${username}', '${Fname}', '${Lname}', NOW(), '${password}', '${salt}', NOW())`)
+    return await db.query(`INSERT INTO Admin (AdminUsername, AdminFName, AdminLName, DateCreated, PasswordHash, Salt, AdminLastLogin) VALUES ('${username}', '${Fname}', '${Lname}', NOW(), '${Password}', '${Salt}', NOW())`)
 }
 
 async function getAll() {
