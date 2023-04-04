@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const admin = require('../services/admin');
 const crypto = require('crypto');
+const auth = require('../services/auth');
 
 // * Returns all Admins when querying with no ID
-router.get('/', async function (req, res) {
+router.get('/', auth.isAuthenticated, async function (req, res) {
     try {
         res.json(await admin.getAll());
     } catch (err) {
@@ -13,13 +14,11 @@ router.get('/', async function (req, res) {
     }
 });
 
-router.post('/', async function (req, res){
+// Creates a new Admin
+router.post('/', auth.isAuthenticated, async function (req, res){
     try {
         salt = crypto.randomBytes(8).toString('hex');
-        //console.log(salt)
         password = crypto.createHash('sha256').update(req.body.password + salt).digest('hex');
-        //console.log(req.body.password);
-        //console.log(password);
         res.json(await admin.createAdmin(req.body.username, req.body.fname, req.body.lname, password, salt));
     } catch (err) {
         console.error(`Error while creating new Admin`, err.message);
@@ -28,7 +27,7 @@ router.post('/', async function (req, res){
 });
 
 // * Returns a specific Admin when querying with an ID
-router.get('/:username', async function (req, res) {
+router.get('/:username', auth.isAuthenticated, async function (req, res) {
     try {
         res.json(await admin.getOne(req.params.username))
     } catch (err) {
@@ -36,8 +35,9 @@ router.get('/:username', async function (req, res) {
         res.status(500).send(err);
     }
 });
-// ! This will need authentication from the user
-router.delete('/:username', async function (req, res) {
+
+// Deletes an admin
+router.delete('/:username', auth.isAuthenticated, async function (req, res) {
     try{
         res.json(await admin.deleteAdmin(req.params.username));
     } catch (err) {
