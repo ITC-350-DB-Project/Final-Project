@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <!-- This is an example page to show how you would make a form that creates a new APT -->
+        <form action="http://localhost:3000/api/apt/" method="post">
+            <label for="aptNation">Nationality</label>
+            <input type="text" name="aptNation">
+            <label for="aptDesc">Description</label>
+            <input type="text" name="aptDesc">
+            <label for="aptFirstSeen">Date First Seen</label>
+            <input type="date" name="aptFirstSeen">
+            <label for="aptName">Name</label>
+            <input type="text" name="aptName">
+            <input type="submit">
+        </form>
+    </body>
+</html>
