@@ -42,9 +42,7 @@
         });
 
         function process(data){
-            //console.log(data);
             for(i=0; i < data.length; i++){
-                console.log(data[i]);
                 var item = `
                 <tr class="table-dark">
                   <td>${data[i].AdminUsername}</td>
@@ -52,11 +50,25 @@
                   <td>${data[i].AdminLName}</td>
                   <td>${data[i].DateCreated}</td>
                   <td>${data[i].AdminLastLogin}</td>
-                  <td><button class="text-white btn btn-dark">DELETE</button>
+                  <td><button class="text-white btn btn-dark" data-Username="${data[i].AdminUsername}">DELETE</button>
                 </tr>`
 
                 $("#table").append(item);
             }
+            //set the listeners for the delete buttons
+            $("button.btn").click(async function(){
+                let url = "http://localhost:3000/api/admin/" + $(this).attr("data-Username");
+                let result;
+                try {
+                    result = await $.ajax({
+                        url: url,
+                        type: 'DELETE'
+                    }).then(alert("Admin " + $(this).attr("data-Username") + " successfully deleted!")).then(location.reload());
+                } catch (error) {
+                    console.error(error);
+                    alert(error);
+                }
+            });
         }
         $(function(){
             console.log("Loading navbar...");

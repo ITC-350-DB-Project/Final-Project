@@ -44,7 +44,7 @@
         function process(data){
             //console.log(data);
             for(i=0; i < data.length; i++){
-                console.log(data[i]);
+                //console.log(data[i]);
                 var item = `
                 <tr class="table-dark">
                   <td>${data[i].Name}</td>
@@ -52,12 +52,28 @@
                   <td>${data[i].Nationality}</td>
                   <td>${data[i].Types}</td>
                   <td>${data[i]["First Seen"]}</td>
-                  <td><button class="text-white btn btn-dark">DELETE</button>
+                  <td><button class="text-white btn btn-dark" data-ID="${data[i].ID}" data-Name="${data[i].Name}">DELETE</button>
                 </tr>`
 
                 $("#table").append(item);
             }
+            //set the listeners for the delete buttons
+            $("button.btn").click(async function(){
+                console.log($(this).attr("data-ID"));
+                let url = "http://localhost:3000/api/apt/" + $(this).attr("data-ID");
+                let result;
+                try {
+                    result = await $.ajax({
+                        url: url,
+                        type: 'DELETE'
+                    }).then(alert("APT " + $(this).attr("data-Name") + " successfully deleted!")).then(location.reload());
+                } catch (error) {
+                    console.error(error);
+                    alert(error);
+                }
+            });
         }
+
         $(function(){
             console.log("Loading navbar...");
             $("#navbar-placeholder").load("/navbar", function(){
