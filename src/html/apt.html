@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <!--<script src="https://code.jquery.com/jquery-latest.min.js"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <style>
+            th {
+                text-align: left;
+                min-width: 150px;
+            }
+            .body{
+                background-image: url(/background-image);
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body class="body">
+        <div id="navbar-placeholder"></div>
+        <div class="container bg-dark rounded m-5 pb-3" 
+        style="width: 70%; margin-left: 25%; margin-right: 25%;" id="apt">
+        </div><!-- <div class="container justify-center p-5">
+            <table class="table table-dark" id="table">
+                <tr>
+                  <th>Name</th>
+                  <th>Alias</th>
+                  <th>Nationality</th>
+                  <th>Type</th>
+                  <th>First Seen</th>
+                </tr>
+              </table> 
+        </div> --> 
+
+    </body>
+    <script>
+        var path = window.location.pathname;
+        var parts = path.split('/');
+        var lastPart = parts[parts.length - 1];
+        var index = parseInt(lastPart) + 1;
+        console.log(index);
+
+
+        $(document).ready(function(){
+            $.get(`http://localhost:3000/api/apt/${index}`, function(data){
+                process(data);
+            });
+        });
+
+        function process(data){
+            console.log(data);
+            // Assume dateStr is a string containing a date in a standard format, e.g. "2023-04-06T12:34:56"
+            var formattedDate = moment(data[0].APTFirstSeen).format("MMM DD, YYYY");
+            console.log(formattedDate); // Output: "Apr 06, 2023"
+
+            var item = `
+                <div class="row text-white p-3" style="font-size: 56px">
+                    ${data[0].APTName}
+                </div>
+                <div class="row text-white">
+                    <div class="col-2" style="font-size: 24px">
+                        ${data[0].APTNationality}
+                    </div>
+                    <div class="col-2" style="font-size: 24px">
+                        ${formattedDate}
+                    </div>
+                </div>
+                <div class="row bg-light m-3">
+                    <div class="m-2">
+                        ${data[0].APTDescription}
+                    </div>
+                </div>
+
+            `
+            $("#apt").append(item);
+
+            /*for(i=0; i < data.length; i++){
+                console.log(data[i]);
+                var item = `
+                <tr class="table-dark">
+                  <td>${data[i].Name}</td>
+                  <td>${data[i].Aliases}</td>
+                  <td>${data[i].Nationality}</td>
+                  <td>${data[i].Types}</td>
+                  <td>${data[i]["First Seen"]}</td>
+                </tr>`
+
+                
+            }*/
+        }
+        $(function(){
+            $("#navbar-placeholder").load("/navbar");
+        });
+        </script>
+</html>

@@ -84,13 +84,18 @@ app.get('/logout', function (req, res, next){
 app.get("/navbar", (req, res) => {
     res.sendFile(path.join(__dirname, '/html/navbar.html'));
 });
-
+//I attempted to make a redirect here if the user isn't logged in. 
+//It didn't seem to work - Tyler F.
 app.get("/admin", auth.isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, '/html/admin/index.html'));
+    if(!req.session.user){
+        res.redirect('http://localhost:3000/login');
+    } else {
+        res.sendFile(path.join(__dirname, '/html/admin/index.html'));
+    }
 });
 
 app.get("/admin/apt", auth.isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, '/html/admin/apt.html'));
+    res.sendFile(path.join(__dirname, '/html/admin/admin_apt.html'));
 });
 
 app.get("/admin/users", auth.isAuthenticated, (req, res) => {
@@ -109,8 +114,8 @@ app.get("/background-image", (req, res) => {
     res.sendFile(path.join(__dirname, '/img/background-image.jpg'));
 });
 
-app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, '/html/login.html'));
+app.get("/apt/*", (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/apt.html'));
 });
 
 // * Return data for the /apt subdomain

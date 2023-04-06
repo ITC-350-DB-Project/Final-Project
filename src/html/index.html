@@ -45,19 +45,34 @@
             for(i=0; i < data.length; i++){
                 console.log(data[i]);
                 var item = `
-                <tr class="table-dark">
-                  <td>${data[i].Name}</td>
-                  <td>${data[i].Aliases}</td>
-                  <td>${data[i].Nationality}</td>
-                  <td>${data[i].Types}</td>
-                  <td>${data[i]["First Seen"]}</td>
-                </tr>`
+                    <tr data-href='http://localhost:3000/apt/${i}' class="table-dark" style="cursor: pointer;">
+                        <td>${data[i].Name}</td>
+                        <td>${data[i].Aliases}</td>
+                        <td>${data[i].Nationality}</td>
+                        <td>${data[i].Types}</td>
+                        <td>${data[i]["First Seen"]}</td>
+                    </tr>`
 
                 $("#table").append(item);
             }
+            $("#table tr").on("click", function() {
+                var link = $(this).data("href");
+                if (link) {
+                    window.location.href = link;
+                }
+            });
         }
         $(function(){
             $("#navbar-placeholder").load("navbar");
         });
+
+        /*document.addEventListener("DOMContentLoaded", function() {
+            var rows = document.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].addEventListener("click", function() {
+                window.location.href = this.getAttribute("data-href");
+              });
+            }
+          });*/
         </script>
 </html>
