@@ -86,7 +86,8 @@ app.get("/navbar", (req, res) => {
 });
 //I attempted to make a redirect here if the user isn't logged in. 
 //It didn't seem to work - Tyler F.
-app.get("/admin", auth.isAuthenticated, (req, res) => {
+//Will now redirect to the login page if the user is not logged in. - Jonathan W.
+app.get("/admin", (req, res) => {
     if(!req.session.user){
         res.redirect('http://localhost:3000/login');
     } else {
