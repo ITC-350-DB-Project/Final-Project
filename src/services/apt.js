@@ -14,7 +14,7 @@ async function getAll() {
 
 // * Queries the database for a singular item based on APTID
 async function getOne(id){
-    data = await db.query(`SELECT * FROM APT WHERE APTID=${id}`);
+    data = await db.query(`SELECT APT.APTID AS ID, APT.APTName AS Name, APT.APTNationality AS Nationality, APT.APTDescription AS Description, view_aptlist.Aliases AS Aliases, view_aptlist.Types AS Types, APT.APTFirstSeen AS FirstSeen, APT.UpdatedByAdminUsername AS AdminLastUpdated, APT.DateUpdated As DateLastUpdated FROM APT JOIN view_aptlist on APT.APTID=view_aptlist.ID WHERE APTID=${id}`);
     // * If there was no data found in the database matching the provided ID then return an error message
     if (data.length == 0){
         data = [{"Response": "Not Found"}]
