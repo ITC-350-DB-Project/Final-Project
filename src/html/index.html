@@ -49,11 +49,11 @@
             for(i=0; i < data.length; i++){
                 console.log(data[i]);
                 var item = `
-                    <tr data-href='http://localhost:3000/apt/${i}' class="table-dark" style="cursor: pointer;">
+                    <tr data-href='http://localhost:3000/apt/${data[i].ID}' class="table-dark" style="cursor: pointer;">
                         <td>${data[i].Name}</td>
-                        <td>${data[i].Aliases}</td>
+                        <td>${data[i].Aliases !== null ? data[i].Aliases.replace(",", ", ") : "(empty)"}</td>
                         <td>${data[i].Nationality}</td>
-                        <td>${data[i].Types}</td>
+                        <td>${data[i].Types !== null ? data[i].Types.replace(",", ", ") : "(empty)"}</td>
                         <td>${moment(data[i]["First Seen"]).format("YYYY-MM-DD")}</td>
                     </tr>`
 
