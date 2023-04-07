@@ -53,25 +53,34 @@
         function process(data){
             console.log(data);
             // Assume dateStr is a string containing a date in a standard format, e.g. "2023-04-06T12:34:56"
-            var formattedDate = moment(data[0].APTFirstSeen).format("MMM DD, YYYY");
+            var formattedDate = moment(data[0].FirstSeen).format("MMM DD, YYYY");
             console.log(formattedDate); // Output: "Apr 06, 2023"
 
             var item = `
                 <div class="row text-white p-3" style="font-size: 56px">
-                    ${data[0].APTName}
+                    ${data[0].Name}
                 </div>
-                <div class="row text-white">
-                    <div class="col-2" style="font-size: 24px">
-                        ${data[0].APTNationality}
+                <div class="row text-white" style="margin: 0 0 30px 15px;">
+                    aka: ${data[0].Aliases !== null ? data[0].Aliases.replace(",", ", ") : "... (nothing here yet)"}
+                </div>
+                <div class="row text-white" style="padding: 0 15px;">
+                    <div class="col-2" style="font-size: 24px; width: 350px;">
+                        Origin: ${data[0].Nationality}
                     </div>
-                    <div class="col-2" style="font-size: 24px">
-                        ${formattedDate}
+                    <div class="col-2" style="font-size: 24px;width: 350px;">
+                        First Active: ${formattedDate}
                     </div>
+                </div>
+                <div class="row text-white" style="padding: 0 30px;font-size:2em;margin-top:30px;">
+                    Info:
                 </div>
                 <div class="row bg-light m-3">
                     <div class="m-2">
-                        ${data[0].APTDescription}
+                        ${data[0].Description}
                     </div>
+                </div>
+                <div class="text-white row" style="padding: 0 30px;">
+                    Last update by ${data[0].AdminLastUpdated} on ${moment(data[0].DateLastUpdated).format("MMM DD, YYYY HH:MM")}
                 </div>
 
             `
