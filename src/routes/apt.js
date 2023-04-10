@@ -14,6 +14,15 @@ router.post('/', auth.isAuthenticated, async function (req, res) {
     }
 });
 
+router.get('/sources/:id', async function (req, res){
+    try {
+        res.json(await apt.getSources(req.params.id));
+    } catch (err){
+        console.error(`Error loading sources`, err.message);
+        res.status(500).send(err);
+    }
+});
+
 // * Returns all APTs when querying with no ID
 router.get('/', async function (req, res) {
     try {
