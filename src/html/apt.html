@@ -46,7 +46,23 @@
         $(document).ready(function(){
             $.get(`http://localhost:3000/api/apt/${index}`, function(data){
                 process(data);
+                $.get(`http://localhost:3000/api/apt/sources/${index}`, function(data){
+                let allSources = "";
+
+                if(data.length > 0){
+                    for(i=0; i < data.length; i++){
+                        allSources += data[i].SourceURL
+                        if (i !== data.length - 1){
+                            allSources += ", ";
+                        }
+                    }
+                } else {
+                    allSources = "(none yet)"
+                }
+                $("#sources").html("Sources: " + allSources);
             });
+            });
+            
         });
 
         function process(data){
@@ -69,6 +85,9 @@
                     <div class="col-2" style="font-size: 24px;width: 350px;">
                         First Active: ${formattedDate}
                     </div>
+                </div>
+                <div class="row text-white" style="margin: 20px 0 30px 15px;" id="sources">
+                    Sources: (none yet)
                 </div>
                 <div class="row text-white" style="padding: 0 30px;font-size:2em;margin-top:30px;">
                     Info:
