@@ -43,9 +43,10 @@ async function updateOne(aptID, aptNation, aptDesc, aptName, adminUsername){
     return data
 }
 
-// Still needs authentication
 async function deleteOne(aptID){
+    data = await db.query(`DELETE FROM Source WHERE APTID=${aptID}`);
     data = await db.query(`DELETE FROM APT WHERE APTID=${aptID}`);
+
     if (data.affectedRows != 0){
         data = [{"Response": "Delete Successful"}]
     }
