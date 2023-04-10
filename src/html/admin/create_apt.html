@@ -16,6 +16,9 @@
                 background-repeat: no-repeat;
                 background-size: cover;
             }
+            .row {
+                margin-top: 10px !important;
+            }
               
         </style>
     </head>
@@ -47,6 +50,12 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-12 form-group" id="sources" style="padding: 20px 10px">
+                        <input type="hidden" name="numSources" value="0" id="numSources" />
+                        <button id="addSource" class="btn" style="background-color:white">Add Source</button>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12 form-group">
                         <input class="btn btn-dark mt-2" type="submit" />
                     </div>
@@ -56,8 +65,17 @@
         
     </body>
     <script>
+        sourceCount = 1;
         $(function(){
             $("#navbar-placeholder").load("/navbar");
+        });
+        $(document).ready(function(){
+            $("#addSource").click(function(){
+                event.preventDefault();
+                $("#numSources").val(sourceCount);
+                $("#sources").append(`<input class="form-control" type="url" style="margin-top:10px;" name="${"source" + sourceCount}" />`);
+                sourceCount++;
+            });
         });
     </script>
 </html>
