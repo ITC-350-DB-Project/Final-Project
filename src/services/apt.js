@@ -2,7 +2,7 @@ const db = require('./db');
 // const helper = require('../helper')
 
 // Still needs authentication
-async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
+async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername, body){
     return await db.query(`INSERT INTO APT 
     (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) 
     VALUES ('${aptNation}', '${aptDesc}', '${aptFirstSeen}', NOW(), '${aptName}', '${adminUsername}', '${adminUsername}')`);
@@ -10,6 +10,14 @@ async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsernam
 
 async function getAll() {
     return await db.query(`SELECT * FROM view_aptlist`);
+}
+
+async function getIDbyName(name) {
+    return await db.query(`SELECT APTID FROM APT WHERE APTName = "${name}"`);
+}
+
+async function addSource(aptID, source) {
+    return await db.query(`INSERT INTO Source (SourceURL, APTID) VALUES ("${source}", ${aptID});`);
 }
 
 // * Queries the database for a singular item based on APTID
@@ -61,5 +69,7 @@ module.exports = {
     getOne,
     updateOne,
     deleteOne,
-    getSources
+    getSources,
+    getIDbyName,
+    addSource
 }
