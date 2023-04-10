@@ -46,10 +46,20 @@ async function deleteOne(aptID){
     }
     return data;
 }
+
+async function getSources(aptID){
+    data = await db.query(`SELECT SourceURL FROM Source WHERE APTID=${aptID}`);
+    if (data.length == 0){
+        data = [{"Response": "Not Found"}];
+    }
+    return data;
+}
+
 module.exports = {
     createOne,
     getAll,
     getOne,
     updateOne,
-    deleteOne
+    deleteOne,
+    getSources
 }
