@@ -111,6 +111,10 @@ app.get("/admin/create_admin", auth.isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '/html/admin/create_admin.html'));
 });
 
+app.get("/admin/update_apt/:id", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/update_apt.html'));
+});
+
 app.get("/background-image", (req, res) => {
     res.sendFile(path.join(__dirname, '/img/background-image.jpg'));
 });

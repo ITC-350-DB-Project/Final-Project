@@ -28,6 +28,7 @@
                   <th>Nationality</th>
                   <th>Type</th>
                   <th>First Seen</th>
+                  <th>Edit</th>
                   <th>DELETE</th>
                 </tr>
               </table> 
@@ -52,6 +53,7 @@
                   <td>${data[i].Nationality}</td>
                   <td>${data[i].Types}</td>
                   <td>${data[i]["First Seen"]}</td>
+                  <td><a href="http://localhost:3000/admin/update_apt/${data[i].ID}" >Edit</a></td>
                   <td><button class="text-white btn btn-dark" data-ID="${data[i].ID}" data-Name="${data[i].Name}">DELETE</button>
                 </tr>`
 

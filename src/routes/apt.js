@@ -64,13 +64,31 @@ router.get('/:id', async function (req, res){
     }
 });
 
-// Was router.update
 router.put('/:id', auth.isAuthenticated, async function (req, res) {
+    console.log(req.body);
     try {
-        res.json(await apt.updateOne(req.params.id));
+        res.json(await apt.updateOne(req.params.id, req.body.aptNation, req.body.aptDesc, req.body.aptName, req.session.user, req.body.aptFirstSeen));
     } catch (err) {
         console.error(`Error attempting to update APT ${req.id}`, err.message);
         res.status(500).send(err);
+    }
+
+    //Clear all sources
+    deleteSource = await apt.clearSources(req.params.id);
+
+    if(parseInt(req.body.numSources) > 0){
+        for(i=1;i < parseInt(req.body.numSources) + 1; i++){
+            objName = "source" + i;
+            console.log("body source #" + i + "= " + req.body[objName]);
+            if(req.body[objName].length > 0){
+                try {
+                    insert = await apt.addSource(req.params.id, req.body[objName]);
+                } catch {
+                    console.error(`Error inserting source:`, err.message);
+                    res.status(500).send(err);
+                }
+            }
+        }
     }
 });
 
@@ -82,4 +100,5 @@ router.delete('/:id', auth.isAuthenticated, async function (req, res) {
         res.status(500).send(err);
     }
 })
+
 module.exports = router;

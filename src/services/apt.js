@@ -1,13 +1,6 @@
 const db = require('./db');
 // const helper = require('../helper')
 
-// Still needs authentication
-// async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
-//     return await db.query(`INSERT INTO APT 
-//     (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) 
-//     VALUES ('${aptNation}', '${aptDesc}', '${aptFirstSeen}', NOW(), '${aptName}', '${adminUsername}', '${adminUsername}')`);
-// }
-
 //prepared statements
 async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
     return await db.query("INSERT INTO APT (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) VALUES (?, ?, ?, NOW(), ?, ?, ?)", [aptNation, aptDesc, aptFirstSeen, aptName, adminUsername, adminUsername]);
@@ -35,10 +28,10 @@ async function getOne(id){
     return data;
 }
 
-async function updateOne(aptID, aptNation, aptDesc, aptName, adminUsername){
+async function updateOne(aptID, aptNation, aptDesc, aptName, adminUsername, aptFirstSeen){
     data = await db.query(`UPDATE APT
-    SET APTNation= ? , APTDescription= ? , APTName= ? , UpdatedByAdminUsername= ? 
-    WHERE APTID= ?`, [aptNation, aptDesc, aptName, adminUsername, aptID]);
+    SET APTNationality= ? , APTDescription= ? , APTName= ? , UpdatedByAdminUsername= ? , APTFirstSeen = ? , DateUpdated=NOW()
+    WHERE APTID= ?`, [aptNation, aptDesc, aptName, adminUsername, aptFirstSeen, aptID]);
     if (data.affectedRows != 0){
         data = [{"Response": "Update Successful"}]
     }
@@ -61,6 +54,14 @@ async function deleteOne(aptID){
     return data;
 }
 
+async function clearSources(aptID){
+    data = await db.query(`DELETE FROM Source WHERE APTID = ?`, [aptID]);
+    if (data.length == 0){
+        data = [{"Response": "Not Found"}];
+    }
+    return data;
+}
+
 async function getSources(aptID){
     data = await db.query(`SELECT SourceURL FROM Source WHERE APTID = ?`, [aptID]);
     if (data.length == 0){
@@ -77,5 +78,6 @@ module.exports = {
     deleteOne,
     getSources,
     getIDbyName,
-    addSource
+    addSource,
+    clearSources
 }
