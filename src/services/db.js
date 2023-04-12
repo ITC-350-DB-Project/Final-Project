@@ -9,6 +9,7 @@ async function query(sql, params) {
         "database": config.database
     }
     const connection = await mysql.createConnection(db);
+    console.log(params);
     const [results,] = await connection.execute(sql, params);
 
     return results;

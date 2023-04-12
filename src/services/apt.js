@@ -2,10 +2,15 @@ const db = require('./db');
 // const helper = require('../helper')
 
 // Still needs authentication
-async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername, body){
-    return await db.query(`INSERT INTO APT 
-    (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) 
-    VALUES ('${aptNation}', '${aptDesc}', '${aptFirstSeen}', NOW(), '${aptName}', '${adminUsername}', '${adminUsername}')`);
+// async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
+//     return await db.query(`INSERT INTO APT 
+//     (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) 
+//     VALUES ('${aptNation}', '${aptDesc}', '${aptFirstSeen}', NOW(), '${aptName}', '${adminUsername}', '${adminUsername}')`);
+// }
+
+//prepared statements
+async function createOne(aptNation, aptDesc, aptFirstSeen, aptName, adminUsername){
+    return await db.query("INSERT INTO APT (APTNationality, APTDescription, APTFirstSeen, DateUpdated, APTName, AdminUsername, UpdatedByAdminUsername) VALUES (?, ?, ?, NOW(), ?, ?, ?)", [aptNation, aptDesc, aptFirstSeen, aptName, adminUsername, adminUsername]);
 }
 
 async function getAll() {
@@ -13,16 +18,16 @@ async function getAll() {
 }
 
 async function getIDbyName(name) {
-    return await db.query(`SELECT APTID FROM APT WHERE APTName = "${name}"`);
+    return await db.query(`SELECT APTID FROM APT WHERE APTName = ?`, [name]);
 }
 
 async function addSource(aptID, source) {
-    return await db.query(`INSERT INTO Source (SourceURL, APTID) VALUES ("${source}", ${aptID});`);
+    return await db.query(`INSERT INTO Source (SourceURL, APTID) VALUES (?, ?);`, [source, aptID]);
 }
 
 // * Queries the database for a singular item based on APTID
 async function getOne(id){
-    data = await db.query(`SELECT APT.APTID AS ID, APT.APTName AS Name, APT.APTNationality AS Nationality, APT.APTDescription AS Description, view_aptlist.Aliases AS Aliases, view_aptlist.Types AS Types, APT.APTFirstSeen AS FirstSeen, APT.UpdatedByAdminUsername AS AdminLastUpdated, APT.DateUpdated As DateLastUpdated FROM APT JOIN view_aptlist on APT.APTID=view_aptlist.ID WHERE APTID=${id}`);
+    data = await db.query(`SELECT APT.APTID AS ID, APT.APTName AS Name, APT.APTNationality AS Nationality, APT.APTDescription AS Description, view_aptlist.Aliases AS Aliases, view_aptlist.Types AS Types, APT.APTFirstSeen AS FirstSeen, APT.UpdatedByAdminUsername AS AdminLastUpdated, APT.DateUpdated As DateLastUpdated FROM APT JOIN view_aptlist on APT.APTID=view_aptlist.ID WHERE APTID= ?`, [id]);
     // * If there was no data found in the database matching the provided ID then return an error message
     if (data.length == 0){
         data = [{"Response": "Not Found"}]
@@ -32,8 +37,8 @@ async function getOne(id){
 
 async function updateOne(aptID, aptNation, aptDesc, aptName, adminUsername){
     data = await db.query(`UPDATE APT
-    SET APTNation=\"${aptNation}\", APTDescription=\"${aptDesc}\", APTName=\"${aptName}\", UpdatedByAdminUsername=\"${adminUsername}"
-    WHERE APTID=\"${aptID}\"`);
+    SET APTNation= ? , APTDescription= ? , APTName= ? , UpdatedByAdminUsername= ? 
+    WHERE APTID= ?`, [aptNation, aptDesc, aptName, adminUsername, aptID]);
     if (data.affectedRows != 0){
         data = [{"Response": "Update Successful"}]
     }
@@ -44,8 +49,8 @@ async function updateOne(aptID, aptNation, aptDesc, aptName, adminUsername){
 }
 
 async function deleteOne(aptID){
-    data = await db.query(`DELETE FROM Source WHERE APTID=${aptID}`);
-    data = await db.query(`DELETE FROM APT WHERE APTID=${aptID}`);
+    data = await db.query(`DELETE FROM Source WHERE APTID= ?`, [aptID]);
+    data = await db.query(`DELETE FROM APT WHERE APTID= ?`, [aptID]);
 
     if (data.affectedRows != 0){
         data = [{"Response": "Delete Successful"}]
@@ -57,7 +62,7 @@ async function deleteOne(aptID){
 }
 
 async function getSources(aptID){
-    data = await db.query(`SELECT SourceURL FROM Source WHERE APTID=${aptID}`);
+    data = await db.query(`SELECT SourceURL FROM Source WHERE APTID = ?`, [aptID]);
     if (data.length == 0){
         data = [{"Response": "Not Found"}];
     }
