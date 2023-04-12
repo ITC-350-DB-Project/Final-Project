@@ -13,6 +13,8 @@ async function AuthenticateUser(username, password){
     console.log("Hashed given password with salt:\t" + hashGiven);
     console.log("Stored Hash:\t\t\t\t" + data[0].PasswordHash);
     if (hashGiven === data[0].PasswordHash){
+        //update the time the user last logged in ie. NOW()
+        data = await db.query(`UPDATE Admin SET AdminLastLogin=NOW() WHERE AdminUsername = ?`, [username]);
         return true;
     } else {
         return false;

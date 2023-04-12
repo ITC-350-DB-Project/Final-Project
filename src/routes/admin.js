@@ -26,6 +26,15 @@ router.post('/', auth.isAuthenticated, async function (req, res){
     }
 });
 
+router.put('/:username', auth.isAuthenticated, async function (req, res){
+    try {
+        res.json(await admin.updateAdmin(req.params.username, req.body.fname, req.body.lname));
+    } catch (err) {
+        console.error(`Error updating Admin`, err.message);
+        res.status(500).send(err);
+    }
+});
+
 // * Returns a specific Admin when querying with an ID
 router.get('/:username', auth.isAuthenticated, async function (req, res) {
     try {

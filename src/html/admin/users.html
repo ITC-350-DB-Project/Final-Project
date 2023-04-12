@@ -28,6 +28,7 @@
                   <th>Last Name</th>
                   <th>Date Created</th>
                   <th>Last Login</th>
+                  <th>Edit</th>
                   <th>DELETE</th>
                 </tr>
               </table> 
@@ -42,6 +43,7 @@
         });
 
         function process(data){
+            console.log(data);
             for(i=0; i < data.length; i++){
                 var item = `
                 <tr class="table-dark">
@@ -50,6 +52,7 @@
                   <td>${data[i].AdminLName}</td>
                   <td>${data[i].DateCreated}</td>
                   <td>${data[i].AdminLastLogin}</td>
+                  <td><a href="http://localhost:3000/admin/update_admin/${data[i].AdminUsername}" >Edit</a></td>
                   <td><button class="text-white btn btn-dark" data-Username="${data[i].AdminUsername}">DELETE</button>
                 </tr>`
 

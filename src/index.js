@@ -115,6 +115,10 @@ app.get("/admin/update_apt/:id", auth.isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '/html/admin/update_apt.html'));
 });
 
+app.get("/admin/update_admin/:username", auth.isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/admin/update_admin.html'));
+});
+
 app.get("/background-image", (req, res) => {
     res.sendFile(path.join(__dirname, '/img/background-image.jpg'));
 });

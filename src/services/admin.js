@@ -22,6 +22,10 @@ async function updatePassword() {
     // TODO: Figure out how passwords are hashed + salted and if that needs to be done here or just simply saving to the database
 }
 
+async function updateAdmin(username, fname, lname){
+    return await db.query(`UPDATE Admin SET AdminFname = ?, AdminLName = ? WHERE AdminUsername = ?`, [fname, lname, username]);
+}
+
 async function deleteAdmin(username) {
     data = await db.query(`DELETE FROM Admin WHERE AdminUsername= ?`, [username]);
     if (data.affectedRows != 0){
@@ -38,5 +42,6 @@ module.exports = {
     getAll,
     getOne,
     updatePassword,
-    deleteAdmin
+    deleteAdmin,
+    updateAdmin
 }
