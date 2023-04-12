@@ -30,7 +30,7 @@
                   <th>Name</th>
                   <th>Alias</th>
                   <th>Nationality</th>
-                  <th>Type</th>
+                  <th>Targets</th>
                   <th>First Seen</th>
                 </tr>
               </table> 
@@ -51,9 +51,9 @@
                 var item = `
                     <tr data-href='http://localhost:3000/apt/${data[i].ID}' class="table-dark" style="cursor: pointer;">
                         <td>${data[i].Name}</td>
-                        <td>${data[i].Aliases !== null ? data[i].Aliases.replace(",", ", ") : "(empty)"}</td>
+                        <td>${data[i].Aliases !== null ? data[i].Aliases.replaceAll(",", ", ") : "(empty)"}</td>
                         <td>${data[i].Nationality}</td>
-                        <td>${data[i].Types !== null ? data[i].Types.replace(",", ", ") : "(empty)"}</td>
+                        <td>${data[i].Types !== null ? data[i].Types.replaceAll(",", ", ") : "(empty)"}</td>
                         <td>${moment(data[i]["First Seen"]).format("YYYY-MM-DD")}</td>
                     </tr>`
 

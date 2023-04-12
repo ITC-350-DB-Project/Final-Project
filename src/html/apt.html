@@ -76,7 +76,10 @@
                     ${data[0].Name}
                 </div>
                 <div class="row text-white" style="margin: 0 0 30px 15px;">
-                    aka: ${data[0].Aliases !== null ? data[0].Aliases.replace(",", ", ") : "... (nothing here yet)"}
+                    aka: ${data[0].Aliases !== null ? data[0].Aliases.replaceAll(",", ", ") : "... (nothing here yet)"}
+                </div>
+                <div class="row text-white" style="margin: 0 0 30px 15px;">
+                    Targets: ${data[0].Types !== null ? data[0].Types.replaceAll(",", ", ") : "... (nothing here yet)"}
                 </div>
                 <div class="row text-white" style="padding: 0 15px;">
                     <div class="col-2" style="font-size: 24px; width: 350px;">
