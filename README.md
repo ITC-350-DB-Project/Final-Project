@@ -19,6 +19,12 @@ CREATE (POST): `/api/apt`: creates a new APT with data provided. Required fields
 
 CREATE (POST): `/api/admin`: creates a new Admin with data provided. Required fields: username, fname, lname, password (In plaintext. It's hashed on the server)
 
+UPDATE (PUT): `/api/apt/{id}`: update the APT with the given ID with the provided information
+
+UPDATE (PUT): `/api/admin/{id}`: update the admin with the given username with the provided information
+
+GET: `/api/apt/sources/{id}`: return a list of the sources for the given ID
+
 GET: `/api/apt`: lists all APTs from the database
 
 GET: `/api/apt/{id}`: queries the DB for a specific APT based on APTID
@@ -27,13 +33,22 @@ GET: `/api/admin`: lists all Admins from the database
 
 GET: `/api/admin/{username}`: lists information about a specific Admin based on AdminUsername
 
-UPDATE (PUT): `/api/apt/{id}`: updates APT information with data provided
-
-UPDATE (PUT): `/api/admin/{username}`: updates the password for the Admin
-
 DELETE: `/api/apt/{id}`: deletes an APT matching the ID provided
 
 DELETE: `/api/admin/{username}`: deletes an Admin matching the username provided
+
+POST: `/authenticate`: sends the username and password of the user attempting to login to the backend for user authentication. If successful, the user is given a new session token and redirected to /admin
+
+GET: `/logout`: destroys the session of the currently logged in user and issues a new, unauthorized session cookie
+
+
+### Error Handling
+
+For GET requests: if the admin or APT ID is not found, the response is "Not Found" in JSON format. If a database error occurs, that database error is returned.  
+For CREATE or UPDATE requests: if a database error occurs, that error is returned. If a SQL error occurs, that error is returned.
+For DELETE requests: if the username or APT ID is not found, the response is "Not Found" in JSON format. If there is an error with the database or SQL statement, then that error is returned.
+
+The practice of having the database and SQL errors returned to the user is not a great thing to do. In a proper production environment there should not be any information like that given to the end user because it gives them more information about the structure of the SQL queries and how the backend works. We implemented it this way to simplify the debugging process.
 
 
 # App Info
