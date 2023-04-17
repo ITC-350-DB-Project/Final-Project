@@ -53,4 +53,54 @@ Example:
 app.get("/admin", isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '/html/admin.html'));
 });
+
 ```
+## Back-end Code
+
+### Javascript (Nodejs)
+
+**/src/index.js:** project root file that defines the whole application, where to route URI requests, and implements sessions
+
+**/src/routes/admin.js:** defines the routes for the admin portion of the API
+
+**/src/routes/apt.js:** defines the routes for the apt portion of the API
+
+**/src/services/admin.js:** has functions for dealing with administrative functions
+
+**/src/services/apt.js:** has functions for dealing with APT creation, etc.
+
+**/src/services/auth.js:** has functions for authenticating a user
+
+**/src/services/db.js:** defines the database connection for the rest of the application to use
+
+<br>
+
+## Front-end Code
+
+**/src/css/style.css:** CSS file that holds the visual definitions for the UI
+
+**/src/css/img/background-image.jpg:** background image for all UI pages
+
+### HTML
+
+**/src/html/apt.html:** page that shows the information for a singular APT
+
+**/src/html/index.html:** root application page that show the list of all APTs
+
+**/src/html/login.html:** login page for admins
+
+**/src/html/navbar.html:** navbar code that is included on every page
+
+**/src/html/admin/admin_apt.html:** page that lists all of the APTs in the system and has links to edit/delete them
+
+**/src/html/admin/create_admin.html:** page to create a new administrator account
+
+**/src/html/admin/create_apt.html:** page to create a new APT entry
+
+**/src/html/admin/index.html:** landing page for when an admin logs in
+
+**/src/html/admin/update_admin.html:** page to update the information for an admin
+
+**/src/html/admin/update_apt.html:** page to update the information for an APT
+
+**/src/html/admin/users.html:** page that lists all admins in the system
