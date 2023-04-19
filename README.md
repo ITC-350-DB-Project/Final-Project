@@ -1,19 +1,25 @@
 # API
 
 ## Setup:
-copy and rename the `settings.example` file to `.settings.json` and set the values to connect to the database
+1. Install NodeJS on your system, follow this [tutorial](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+2.	To ensure that the front-end can connect to the database, please follow these [instructions](https://github.com/ITC-350-DB-Project/Milestone-3)
+3.	Copy and rename `settings.example` to `.settings.json` and set the correct values to connect to your database. Save the file and continue.
+4.	Make sure that your docker container is running with your MySQL database.
 
-then run 
+5. Run this command to enter developer mode. This will automatically reload the API every time that you save a file.
 ```bash
 npm run dev
 ```
-to enter developer mode. This will automatically reload the API every time that you save a file
-
 If you just want to start the API without devtools run
 ```bash
 npm run start
 ```
-
+You may get an error that you need to install the `express` module. To fix this run:
+```bash
+npm install express
+```
+7.	Open your browser to http://localhost:3000/ and see that your front end is running and one row of the database should be populated.
+8.	To administer the page, click “Admin” in the upper left. Login with the credentials `test:test`. From here, you can update APTs, create APTs, manage Admins, and create Admins.
 ## Endpoints:
 CREATE (POST): `/api/apt`: creates a new APT with data provided. Required fields: aptNation, aptDesc, aptFirstSeen, aptName
 
